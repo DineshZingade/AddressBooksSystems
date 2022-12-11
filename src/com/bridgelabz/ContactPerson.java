@@ -1,7 +1,6 @@
 package com.bridgelabz;
 
 public class ContactPerson {
-	
 	private String firstName, lastName, address, city, state, email;
 	private int zipCode;
 	private long phoneNumber;
