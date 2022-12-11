@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBook {
+	Scanner sc = new Scanner(System.in);
+	ArrayList<ContactPerson> addressBook1 = new ArrayList<>();
 
 	public ContactPerson createContact() {
-
-		Scanner sc = new Scanner(System.in);
-		ArrayList<ContactPerson> addressBook1 = new ArrayList<>();
-
 		ContactPerson person = new ContactPerson();
 		System.out.print("Enter First Name: ");
 		person.setFirstName(sc.next());
@@ -32,9 +30,6 @@ public class AddressBook {
 	}
 
 	public void addContact() {
-		Scanner sc = new Scanner(System.in);
-		ArrayList<ContactPerson> addressBook1 = new ArrayList<>();
-
 		ContactPerson contactPerson = createContact();
 		addressBook1.add(contactPerson);
 		System.out.println(contactPerson);
@@ -42,9 +37,6 @@ public class AddressBook {
 	}
 
 	public void editContact() {
-		Scanner sc = new Scanner(System.in);
-		ArrayList<ContactPerson> addressBook1 = new ArrayList<>();
-
 		boolean isContactFound = false;
 		System.out.println("Enter Name to edit Contact");
 		String name = sc.next();
@@ -78,9 +70,29 @@ public class AddressBook {
 		}
 	}
 
-	void display() {
-		ArrayList<ContactPerson> addressBook1 = new ArrayList<>();
+	public void deleteContact() {
+		boolean isContactFound = false;
+		System.out.println("enter name to delete contact");
+		String name = sc.next();
+		for (ContactPerson contactPerson : addressBook1) {
+			if (contactPerson.getFirstName().equalsIgnoreCase(name)) {
+				System.out.println("contact found:");
+				isContactFound = true;
+				System.out.println(contactPerson);
+				System.out.println("confirm to delete (y/n)");
+				if (sc.next().equalsIgnoreCase("y")) {
+					addressBook1.remove(contactPerson);
+					System.out.println("contact deleted");
+				}
+				break;
+			}
+		}
+		if (!isContactFound) {
+			System.out.println("Opps... contact not found");
+		}
+	}
 
+	void display() {
 		for (ContactPerson person : addressBook1) {
 			System.out.println(person);
 		}
