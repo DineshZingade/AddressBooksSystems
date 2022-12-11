@@ -1,4 +1,4 @@
-package com.bridgelabz
+package com.bridgelabz;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,10 +7,13 @@ import java.util.Scanner;
 public class AddressBook {
 
 	Scanner sc = new Scanner(System.in);
+	static HashMap<String, ArrayList> addressBookList = new HashMap<>();// create an object of hashmap
+	static ArrayList<ContactPerson> currentAddressBook;// declare variable
+	static String currentAddressBookName;// declare variable
 
-	// Create an object of arraylist
-	ArrayList<ContactPerson> addressBook1 = new ArrayList<>();
-
+	/*
+	 * create contacts
+	 */
 	public ContactPerson createContact() {
 		ContactPerson person = new ContactPerson();// creating object of ContactPerson class
 		System.out.print("Enter First Name: ");
@@ -36,13 +39,14 @@ public class AddressBook {
 	// Add new contacts to address book
 	public void addContact() {
 		ContactPerson contactPerson = createContact();// call createContact method and store in contactPerson
-		addressBook1.add(contactPerson);// using arraylist object reference call add method
+		currentAddressBook.add(contactPerson);// using hashmap object reference call add method
 		System.out.println(contactPerson);// print contact details of person
 		System.out.println("Contact added successfully");
 	}
 
 	/*
-	 * Edit contact if contact found then edit otherwise no contact found message
+	 * Edit existing contact using person`s name if contact found then edit
+	 * otherwise no contact found message will be display
 	 */
 	public void editContact() {
 		boolean isContactFound = false;
@@ -79,11 +83,10 @@ public class AddressBook {
 	}
 
 	/*
-	 * Delete contact if contact found then delete that contact if no contact found
-	 * then message will be display as...contact not found
+	 * Delete contact using person`s name if contact found then delete that contact
+	 * if no contact found then message will be display as oops....contact not found
 	 */
 	public void deleteContact() {
-
 		boolean isContactFound = false;
 		System.out.println("enter name to delete contact");
 		String name = sc.next();
@@ -105,13 +108,47 @@ public class AddressBook {
 		}
 	}
 
-	void displayContact() {
-		if (addressBook1.isEmpty()) {
-			System.out.println("No contacts to display");
-		} else {
-			for (ContactPerson contactPerson : addressBook1) {
-				System.out.println(contactPerson);
+	/*
+	 * add multiple address book each address book has unique name
+	 */
+	void addNewAddressBook() {
+		System.out.println("Enter name for AddressBook: ");
+		String addressBookName = sc.next();
+		ArrayList<ContactPerson> addressBook = new ArrayList();// creating object of arraylist
+		// using object reference of hashmap calling put method and passing key as
+		// addressBookName and value as addressBook
+		addressBookList.put(addressBookName, addressBook);
+		System.out.println("new AddressBook created");
+		currentAddressBook = addressBookList.get(addressBookName);// retrieve addressBookName using get method
+		currentAddressBookName = addressBookName;// addressBookName store in current addressBookName
+	}
+
+	/*
+	 * select address book if we want to add more contact in existing address book
+	 * then select that address book
+	 */
+	void selectAddressBook() {
+		System.out.println(addressBookList.keySet());
+		System.out.println("Enter name of address book:");
+		String addressBookName = sc.next();
+
+		for (String key : addressBookList.keySet()) {
+			if (key.equalsIgnoreCase(addressBookName)) {
+				currentAddressBook = addressBookList.get(key);
+				currentAddressBookName = key;
 			}
+		}
+		System.out.println("current AddressBook is: " + currentAddressBookName);
+	}
+
+	/*
+	 * Display contact
+	 */
+	void displayContact(ArrayList addressBook) {
+		System.out.println("Contacts: ");
+		for (Object p : addressBook) {
+			ContactPerson person = (ContactPerson) p;
+			System.out.println(person);
 		}
 	}
 }
