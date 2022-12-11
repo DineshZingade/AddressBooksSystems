@@ -21,9 +21,12 @@ public class AddressBookMain {
 				addressBook.editContact();
 				break;
 			case 3:
-				addressBook.display();
+				addressBook.deleteContact();
 				break;
 			case 4:
+				addressBook.displayContact();
+				break;
+			case 5:
 				flag1 = false;
 				break;
 			default:
