@@ -6,14 +6,11 @@ import java.util.Scanner;
 
 public class AddressBook {
 
-	Scanner sc = new Scanner(System.in);
-	static HashMap<String, ArrayList> addressBookList = new HashMap<>();// create an object of hashmap
+	static Scanner sc = new Scanner(System.in);
+	static HashMap<String, ArrayList<ContactPerson>> addressBookList = new HashMap<>();// create an object of hashmap
 	static ArrayList<ContactPerson> currentAddressBook;// declare variable
 	static String currentAddressBookName;// declare variable
 
-	/*
-	 * create contacts
-	 */
 	public ContactPerson createContact() {
 		ContactPerson person = new ContactPerson();// creating object of ContactPerson class
 		System.out.print("Enter First Name: ");
@@ -64,7 +61,8 @@ public class AddressBook {
 		boolean isContactFound = false;
 		System.out.println("Enter Name to edit Contact");
 		String name = sc.next();
-		for (ContactPerson contactPerson : currentAddressBook) {
+
+		for (ContactPerson contactPerson : currentAddressBook) { // iterate over the arraylist
 			if (name.equalsIgnoreCase(contactPerson.getFirstName())) {
 				isContactFound = true;
 				System.out.print("Enter First Name :");
@@ -163,4 +161,50 @@ public class AddressBook {
 			System.out.println(person);
 		}
 	}
+
+	/*
+	 * search contact by city and state
+	 */
+	void searchContact() {
+		System.out.println("1.Search by City \n2.Search by State");
+		int option = sc.nextInt();
+		switch (option) {
+		case 1:
+			System.out.println("Enter city :");
+			searchByCity(sc.next());
+			break;
+		case 2:
+			System.out.println("Enter State :");
+			searchByState(sc.next());
+			break;
+		default:
+			searchContact();
+			break;
+		}
+	}
+
+	// search contact by city
+	void searchByCity(String city) {
+		System.out.println("Search Result: ");
+		for (String addressBookName : addressBookList.keySet()) {// returns a set view of the keys contained in map
+			// forEach iterate through every element of the stream
+			addressBookList.get(addressBookName).stream().forEach((person) -> {
+				if (person.getCity().equalsIgnoreCase(city))
+					System.out.println(person);// we will get contacts whose city is same
+			});
+		}
+	}
+
+	// search contact by state
+	void searchByState(String state) {
+		System.out.println("Search Result: ");
+		for (String addressBookName : addressBookList.keySet()) {// returns a set view of the keys contained in map
+			// forEach iterate through every element of the stream
+			addressBookList.get(addressBookName).stream().forEach((person) -> {
+				if (person.getState().equalsIgnoreCase(state))
+					System.out.println(person);// we will get contacts whose state is same
+			});
+		}
+	}
+
 }
