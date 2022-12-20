@@ -1,7 +1,6 @@
 package com.bridgelabz;
 
 public class ContactPerson {
-	
 	private String firstName, lastName, address, city, state, email;
 	private int zipCode;
 	private long phoneNumber;
@@ -80,5 +79,4 @@ public class ContactPerson {
 				+ address + '\'' + ", city='" + city + '\'' + ", state='" + state + '\'' + ", email='" + email + '\''
 				+ ", zipCode=" + zipCode + ", phoneNumber=" + phoneNumber + '}';
 	}
-
 }
